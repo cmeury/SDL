@@ -5,3 +5,5 @@
 /doc/org/ikayzo/.svn/
 /.idea
 /SDL.iml
+/.gradle
+/build

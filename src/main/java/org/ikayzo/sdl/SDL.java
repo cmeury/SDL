@@ -154,14 +154,13 @@ public class SDL {
 	
 	private static String escape(Character ch) {
 
-		char c = ch.charValue();
-		switch(c) {
+		switch(ch) {
 			case '\\': return "\\\\";
 			case '\'': return "\\'";
 			case '\t': return "\\t";
 			case '\r': return "\\r";
 			case '\n': return "\\n";
-			default: return ""+c;
+			default: return "" + ch;
 		}
 	}
 	

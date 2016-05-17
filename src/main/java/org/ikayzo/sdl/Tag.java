@@ -340,13 +340,11 @@ public class Tag implements Serializable {
 	private List values = new ArrayList();
 	private List valuesView = Collections.unmodifiableList(values);
 	private Map<String,String> attributeToNamespace =
-		new HashMap<String,String>(); 
-	private Map<String,String> attributeToNamespaceView =
-		Collections.unmodifiableMap(attributeToNamespace);
-	private SortedMap<String,Object> attributes = new TreeMap<String,Object>();
+			new HashMap<>();
+	private SortedMap<String,Object> attributes = new TreeMap<>();
 	private SortedMap<String,Object> attributesView =
 		Collections.unmodifiableSortedMap(attributes);
-	private List<Tag> children = new ArrayList<Tag>();	
+	private List<Tag> children = new ArrayList<>();
 	private List<Tag> childrenView = Collections.unmodifiableList(children);
 	
 	/**
@@ -447,7 +445,7 @@ public class Tag implements Serializable {
 	 * @return The value assuming a boolean
 	 */
 	public boolean booleanValue() {
-		return ((Boolean)getValue()).booleanValue();
+		return (Boolean) getValue();
 	}
 	
 	/**
@@ -513,7 +511,7 @@ public class Tag implements Serializable {
 	 * @return All the child tags having the given name
 	 */
 	public List<Tag> getChildren(String childName, boolean recursive) {
-		List<Tag> kids = new ArrayList<Tag>();
+		List<Tag> kids = new ArrayList<>();
 		for(Tag t:children) {
 			if(t.getName().equals(childName))
 				kids.add(t);
@@ -548,7 +546,7 @@ public class Tag implements Serializable {
 	public List<Tag> getChildrenForNamespace(String namespace,
 			boolean recursive) {
 		
-		List<Tag> kids = new ArrayList<Tag>();
+		List<Tag> kids = new ArrayList<>();
 		for(Tag t:children) {
 			if(t.getNamespace().equals(namespace))
 				kids.add(t);
@@ -744,7 +742,7 @@ public class Tag implements Serializable {
 	public SortedMap<String, Object> getAttributesForNamespace(
 			String namespace) {
 		
-		TreeMap<String,Object> atts = new TreeMap<String,Object>();
+		TreeMap<String,Object> atts = new TreeMap<>();
 		
 		for(Entry<String,String> e:attributeToNamespace.entrySet()) {
 
@@ -780,9 +778,7 @@ public class Tag implements Serializable {
 		ArrayList<Tag> kids = new ArrayList();
 		for(Tag t:children) {
 			kids.add(t);
-			
-			if(recursively)
-				kids.addAll(t.getChildren(true));
+			kids.addAll(t.getChildren(true));
 		}
 		
 		return Collections.unmodifiableList(kids);
@@ -967,45 +963,43 @@ public class Tag implements Serializable {
 			skipValueSpace=true;
 		} else {
 			if(!namespace.equals(""))
-				builder.append(namespace + ":");
+				builder.append(namespace).append(":");
 			builder.append(name);
 		}
 		// output values
 		if(!values.isEmpty()) {
-			for(Iterator i=values.iterator(); i.hasNext();) {
-				if(skipValueSpace)
-					skipValueSpace=false;
+			for (Object value : values) {
+				if (skipValueSpace)
+					skipValueSpace = false;
 				else
 					builder.append(" ");
-				builder.append(SDL.format(i.next()));
+				builder.append(SDL.format(value));
 			}
 		}
 		
 		// output attributes
 		if(!attributes.isEmpty()) {
-			for(Iterator<Entry<String,Object>> i=
-				attributes.entrySet().iterator();i.hasNext();) {
-				
+			for (Entry<String, Object> stringObjectEntry : attributes.entrySet()) {
+
 				builder.append(" ");
-				
-				Entry<String,Object> e = i.next();
-				String key=e.getKey();
+
+				String key = stringObjectEntry.getKey();
 				String attNamespace = attributeToNamespace.get(key);
-			
-				if(!attNamespace.equals(""))
-					builder.append(attNamespace + ":");
-				builder.append(key + "=");
+
+				if (!attNamespace.equals(""))
+					builder.append(attNamespace).append(":");
+				builder.append(key).append("=");
 				builder.append(SDL.format(attributes.get(key)));
 			}
 		}		
 		
 		// output children
 		if(!children.isEmpty()) {
-			builder.append(" {" + newLine);
+			builder.append(" {").append(newLine);
 			for(Tag t:children) {
-				builder.append(t.toString(linePrefix + "    ") + newLine);
+				builder.append(t.toString(linePrefix + "    ")).append(newLine);
 			}
-			builder.append(linePrefix + "}");
+			builder.append(linePrefix).append("}");
 		}
 		
 		return builder.toString();
@@ -1052,7 +1046,7 @@ public class Tag implements Serializable {
 		
 		StringBuilder builder = new StringBuilder(linePrefix + "<");
 		if(!namespace.equals(""))
-			builder.append(namespace + ":");
+			builder.append(namespace).append(":");
 		builder.append(name);
 		
 		// output values
@@ -1060,8 +1054,7 @@ public class Tag implements Serializable {
 			int i=0;
 			for(Object val:values) {
 				builder.append(" ");
-				builder.append("_val" + i + "=\"" + SDL.format(val, false)
-						+ "\"");
+				builder.append("_val").append(i).append("=\"").append(SDL.format(val, false)).append("\"");
 				i++;
 			}
 		}
@@ -1072,23 +1065,22 @@ public class Tag implements Serializable {
 				builder.append(" ");
 				String attNamespace = attributeToNamespace.get(key);
 				if(!attNamespace.equals(""))
-					builder.append(attNamespace + ":");
-				builder.append(key + "=");
-				builder.append("\"" + SDL.format(attributes.get(key), false)
-						+ "\"");			
+					builder.append(attNamespace).append(":");
+				builder.append(key).append("=");
+				builder.append("\"").append(SDL.format(attributes.get(key), false)).append("\"");
 			}
 		}		
 
 		if(!children.isEmpty()) {
-			builder.append(">" + newLine);
+			builder.append(">").append(newLine);
 			for(Tag t:children) {
-				builder.append(t.toXMLString(linePrefix + "    ") + newLine);
+				builder.append(t.toXMLString(linePrefix + "    ")).append(newLine);
 			}
 			
-			builder.append(linePrefix + "</");
+			builder.append(linePrefix).append("</");
 			if(!namespace.equals(""))
-				builder.append(namespace + ":");
-			builder.append(name + ">");
+				builder.append(namespace).append(":");
+			builder.append(name).append(">");
 		} else {
 			builder.append("/>");
 		}

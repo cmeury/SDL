@@ -55,7 +55,7 @@ class Parser {
 	List<Tag> parse() throws IOException,
 		SDLParseException {
 		
-		List<Tag> tags = new ArrayList<Tag>();
+		List<Tag> tags = new ArrayList<>();
 		List<Token> toks;
 		
 		while((toks=getLineTokens())!=null) {
@@ -370,7 +370,7 @@ class Parser {
 		line = readLine();
 		if(line==null)
 			return null;
-		toks = new ArrayList<Token>();
+		toks = new ArrayList<>();
 		lineLength = line.length(); 
 		sb = null;
 		tokenStart=0;	
@@ -639,7 +639,7 @@ class Parser {
 				pos=endIndex+1;
 			} else {
 				// handle multiline comments
-				inner: while(true) {
+				while(true) {
 					line = readRawLine();							
 					if(line==null) {
 						parseException("/* comment not terminated.",
@@ -651,7 +651,7 @@ class Parser {
 					if(endIndex!=-1) {
 						lineLength = line.length(); 
 						pos=endIndex+1;
-						break inner;
+						break;
 					}
 				}	
 			}
@@ -679,7 +679,7 @@ class Parser {
 					"\n");
 			int start = pos;
 			// handle multiline quotes
-			inner: while(true) {
+			while(true) {
 				line = readRawLine();
 				if(line==null) {
 					parseException("` quote not terminated.",
@@ -694,7 +694,7 @@ class Parser {
 					lineLength = line.length(); 
 					
 					pos=endIndex;
-					break inner;
+					break;
 				} else {
 					sb.append(line + "\n");
 				}
@@ -722,7 +722,7 @@ class Parser {
 					"\n");
 			int start = pos;
 			// handle multiline quotes
-			inner: while(true) {
+			while(true) {
 				line = readRawLine();
 				if(line==null) {
 					parseException("[base64] binary literal not " +
@@ -737,7 +737,7 @@ class Parser {
 					lineLength = line.length(); 
 					
 					pos=endIndex;
-					break inner;
+					break;
 				} else {
 					sb.append(line + "\n");
 				}
@@ -1066,29 +1066,27 @@ class Parser {
 					
 					hour=Integer.parseInt(segments[1]);
 					minute=Integer.parseInt(segments[2]);
-					
-					if(segments.length==4) {
-						String last = segments[3];
-						int dotIndex = last.indexOf(".");
-						
-						if(dotIndex==-1) {
-							second = Integer.parseInt(last);
-						} else {
-							second =
-								Integer.parseInt(
-										last.substring(0, dotIndex));
-							
-							String millis = last.substring(dotIndex+1);
-							if(millis.length()==1)
-								millis=millis+"00";
-							else if(millis.length()==2)
-								millis=millis+"0";
-							
-							millisecond =
-								Integer.parseInt(millis);
-						}
-					}
-					
+
+					String last = segments[3];
+					int dotIndex = last.indexOf(".");
+
+					if(dotIndex==-1) {
+                        second = Integer.parseInt(last);
+                    } else {
+                        second =
+                            Integer.parseInt(
+                                    last.substring(0, dotIndex));
+
+                        String millis = last.substring(dotIndex+1);
+                        if(millis.length()==1)
+                            millis=millis+"00";
+                        else if(millis.length()==2)
+                            millis=millis+"0";
+
+                        millisecond =
+                            Integer.parseInt(millis);
+                    }
+
 					if(day<0) {
 						hour=reverseIfPositive(hour);
 						minute=reverseIfPositive(minute);
@@ -1128,12 +1126,8 @@ class Parser {
 				parseException("Time format: " + nfe.getMessage(), line,
 						position);
 			}
-			
-			TimeSpanWithZone tswz = new TimeSpanWithZone(
-					day, hour, minute, second, millisecond, timeZone
-			);
 
-			return tswz;
+			return new TimeSpanWithZone(day, hour, minute, second, millisecond, timeZone);
 		}		
 	}
 	
@@ -1193,7 +1187,7 @@ class Parser {
 					literal + ">.  Character literals must start and end " +
 					"with single quotes.");		
 		
-		return new Character(literal.charAt(1));
+		return literal.charAt(1);
 	}
 	
 	static Number parseNumber(String literal) {
@@ -1206,10 +1200,10 @@ class Parser {
 			if("-0123456789".indexOf(c)==-1) {
 				if(c=='.') {
 					if(hasDot) {
-						new NumberFormatException(
+						throw new NumberFormatException(
 						    "Encountered second decimal point.");
 					} else if(i==textLength-1) {
-						new NumberFormatException(
+						throw new NumberFormatException(
 								"Encountered decimal point at the " +
 								"end of the number.");	
 					} else {
@@ -1239,7 +1233,7 @@ class Parser {
 			return new BigDecimal(number);
 		} else if(tail.equalsIgnoreCase("L")) {
 			if(hasDot)
-				new NumberFormatException("Long literal with decimal " +
+				throw new NumberFormatException("Long literal with decimal " +
 						"point");
 			return new Long(number);
 		} else if(tail.equalsIgnoreCase("F")) {
@@ -1352,7 +1346,7 @@ class Parser {
 		try {
 			bytes=Base64.decode(sb.toString());
 		} catch(Base64.EncodingException bee) {
-			new IllegalArgumentException(bee.getMessage());
+			throw new IllegalArgumentException(bee.getMessage());
 		}
 		
 		return bytes;
@@ -1377,7 +1371,7 @@ class Parser {
 			if(segments.length==4) {
 				String dayString = segments[0];
 				if(!dayString.endsWith("d"))
-					new IllegalArgumentException("The day component of a time " +
+					throw new IllegalArgumentException("The day component of a time " +
 					    "span must end with a lower case d");
 				
 				days = Integer.parseInt(dayString.substring(0,
@@ -1385,29 +1379,27 @@ class Parser {
 				
 				hours=Integer.parseInt(segments[1]);
 				minutes=Integer.parseInt(segments[2]);
-				
-				if(segments.length==4) {
-					String last = segments[3];
-					int dotIndex = last.indexOf(".");
-					
-					if(dotIndex==-1) {
-						seconds = Integer.parseInt(last);
-					} else {
-						seconds =
-							Integer.parseInt(
-									last.substring(0, dotIndex));
-						
-						String millis = last.substring(dotIndex+1);
-						if(millis.length()==1)
-							millis=millis+"00";
-						else if(millis.length()==2)
-							millis=millis+"0";
-						
-						milliseconds =
-							Integer.parseInt(millis);
-					}
-				}
-				
+
+				String last = segments[3];
+				int dotIndex = last.indexOf(".");
+
+				if(dotIndex==-1) {
+                    seconds = Integer.parseInt(last);
+                } else {
+                    seconds =
+                        Integer.parseInt(
+                                last.substring(0, dotIndex));
+
+                    String millis = last.substring(dotIndex+1);
+                    if(millis.length()==1)
+                        millis=millis+"00";
+                    else if(millis.length()==2)
+                        millis=millis+"0";
+
+                    milliseconds =
+                        Integer.parseInt(millis);
+                }
+
 				if(days<0) {
 					hours=reverseIfPositive(hours);
 					minutes=reverseIfPositive(minutes);

@@ -72,7 +72,7 @@ public class SDLTimeSpan implements Serializable {
 	 * @return The days component
 	 */
 	public int getDays() {
-		return (int)(((long)milliseconds)/MILLISECONDS_IN_DAY);
+		return (int)(milliseconds /MILLISECONDS_IN_DAY);
 	}
 	
 	/**
@@ -285,22 +285,22 @@ public class SDLTimeSpan implements Serializable {
 			sb.append("d");
 			sb.append(":");
 			
-			sb.append(padTo2((int)Math.abs(hours)));
+			sb.append(padTo2(Math.abs(hours)));
 		} else {		
 			sb.append(padTo2(hours));
 		}
 		
 		sb.append(":");
 		
-		sb.append(padTo2((int)Math.abs(minutes)));
+		sb.append(padTo2(Math.abs(minutes)));
 		sb.append(":");
 		
-		sb.append(padTo2((int)Math.abs(seconds)));
+		sb.append(padTo2(Math.abs(seconds)));
 		
 		if(milliseconds!=0) {
 			sb.append(".");	
 			
-			String millis = "" + (int)Math.abs(milliseconds);
+			String millis = "" + Math.abs(milliseconds);
 			if(millis.length()==1)
 				millis="00"+millis;
 			else if(millis.length()==2)
@@ -314,7 +314,7 @@ public class SDLTimeSpan implements Serializable {
 	
 	private String padTo2(int val) {
 		if(val>-10 && val<0) {
-			return "-0" + (int)Math.abs(val);
+			return "-0" + Math.abs(val);
 		} else if(val>-1 && val<10) {
 			return "0" + val;
 		}
