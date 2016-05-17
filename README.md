@@ -16,6 +16,10 @@ Changes since beta 4:
 - Fixed numerous documentation errors
 - Various updates to documentation
 
+## Documentation
+
+Javadoc of `boilerplate` branch: https://cdn.rawgit.com/cmeury/SDL/boilerplate/doc/index.html
+
 ## Gradle
 
 * Build the project: `gradle build`
