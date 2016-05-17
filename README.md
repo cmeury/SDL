@@ -21,4 +21,4 @@ Changes since beta 4:
 * Build the project: `gradle build`
 * Run all tests: `gradle test`
 * Create the JAR `build/libs/sdlang-java-1.x.y.jar`: `gradle jar`
-* Generate Javadoc in `build/docs`: `gradle javadoc`
+* Generate Javadoc in `doc`: `gradle doc`
