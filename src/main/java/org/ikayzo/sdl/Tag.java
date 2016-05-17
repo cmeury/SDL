@@ -34,35 +34,35 @@ import java.util.Map.Entry;
  * <p>SDL (Simple Declarative Language) documents are made up of Tags.  Tags
  * contain</p>
  * 
- * <pre>
+ * <code>
  *      a name (if not present, the name "content" is used)
  *      a namespace (optional)
  *      0 or more values (optional)
  *      0 or more attributes (optional)
  *      0 or more children (optional)
- * </pre>
+ * </code>
  * 
  * <p>For the SDL code:</p>
- * <pre>
+ * <code>
  *     size 4
  *     smoker false
- * </pre>
+ * </code>
  * 
  * <p>
  * Assuming this code is in a file called values.sdl, the values can be read 
  * using the following code (ignoring exceptions):<p>
  * 
- * <pre>
+ * <code>
  *     Tag root = new Tag("root").read(new File("values.sdl"));
  *     int size = root.getChild("size").intValue();
  *     boolean smoker = root.getChild("smoker").booleanValue();
- * </pre>
+ * </code>
  * 
  * <p>A tag is basically a data structure with a list of values, a map of
  * attributes, and (if it has a body) child tags.  In the example above, the
  * "values.sdl" file is read into a tag called "root".  It has two children
  * (tags) called "size" and "smoker".  Both these children have one value, no 
- * attributes, and no bodies.<p>
+ * attributes, and no bodies.</p>
  * 
  * <p>SDL is often used for simple key-value mappings.  To simplify things Tag  
  * has the methods getValue and setValue which operate on the first element in 
@@ -71,17 +71,17 @@ import java.util.Map.Entry;
  * 
  * <p>The example above used the simple format common in property files:</p>
  * 
- * <pre>
+ * <code>
  * name value
- * </pre>
+ * </code>
  * 
  * <p>The full SDL tag format is:</p>
  * 
- * <pre>
+ * <code>
  * namespace:name value_list attribute_list {
  *     children_tags
  * }
- * </pre>
+ * </code>
  * 
  * <p>where value_list is zero or more space separated SDL literals and 
  * attribute_list is zero or more space separated (namespace:)key=value pairs. 
@@ -108,18 +108,18 @@ import java.util.Map.Entry;
  * characters (\), and new lines (\n) within this type of String literal must be
  * escaped like so:</p>
  * 
- * <pre>
+ * <code>
  *     file "C:\\folder\\file.txt"
  *     say "I said \"something\""
- * </pre>
+ * </code>
  * 
  * <p>This type of String literal can be continued on the next line by placing a
  * backslash (\) at the end of the line like so:</p>
  * 
- * <pre>
+ * <code>
  *     line "this is a \
  *          long string of text"
- * </pre>
+ * </code>
  * 
  * <p>White space before the first character in the second line will be ignored.
  * </p>
@@ -132,14 +132,14 @@ import java.util.Map.Entry;
  * </p>
  * 
  * <p>Examples:</p>
- * <pre>
+ * <code>
  *     file `C:\folder\file.txt`
  *     say `I said "something"`
  *     regex `\w+\.suite\(\)`
  *     long_line `This is
  *         a long line
  *         fee fi fo fum`
- * </pre>
+ * </code>
  * 
  * <p>Note: SDL interprets new lines in `` String literals as a single new line
  * character (\n) regarless of the platform.</p>
@@ -149,7 +149,7 @@ import java.util.Map.Entry;
  * </p>
  * 
  * <p>Examples:</p>
- * <pre>
+ * <code>
  *     key [sdf789GSfsb2+3324sf2] name="my key"
  *     image [
  *         R3df789GSfsb2edfSFSDF
@@ -161,7 +161,7 @@ import java.util.Map.Entry;
  *         uikuikk2349GSfsb2edfS
  *         vFSDFR3df789GSfsb2edf
  *     ]
- * </pre>
+ * </code>
  * 
  * <p>SDL supports date, time span, and date/time literals.  Data and Date/Time
  * literals use a 24 hour clock (0-23).  If a timezone is not specified, the
@@ -169,7 +169,7 @@ import java.util.Map.Entry;
  * </p>
  *
  * <p>Examples:</p>
- * <pre>
+ * <code>
  *     # create a tag called "date" with a date value of Dec 5, 2005
  *     date 2005/12/05
  *     
@@ -183,11 +183,11 @@ import java.util.Map.Entry;
  *     
  *     # a date time literal
  *     in_japan 2005/12/05 14:12:23.345-JST    
- * </pre>
+ * </code>
  * 
  * <p>SDL 1.0 has thirteen literal types (parenthesis indicate optional
  * components)</p>
- * <pre>
+ * <code>
  *     1. string (unicode) - examples: "hello" or `aloha`
  *     2. character (unicode) - example: '/'
  *            Note: &#92;uXXXX style unicode escapes are not supported (or
@@ -213,7 +213,7 @@ import java.util.Map.Entry;
  *                         23 seconds, 532 milliseconds)
  *     12. binary [base64] exmaple - [sdf789GSfsb2+3324sf2]
  *     13. null
- * </pre>
+ * </code>
  * 
  * <p>* Timezones must be specified using a valid time zone ID
  * (ex. America/Los_Angeles), three letter abbreviation (ex. HST),
@@ -224,8 +224,7 @@ import java.util.Map.Entry;
  * <p>These types are designed to be portable across Java, .NET, and other 
  * popular platforms.</p>
  * 
- * <p>
- * SDL supports four comment types.
+ * <p>SDL supports four comment types.</p>
  * <ol>
  * <li>// single line comments identicle to those used in Java, C, etc. // style
  * comments can occur anywhere in a line.  All text after // up to the new line
@@ -236,11 +235,10 @@ import java.util.Map.Entry;
  * <li>Slash star (/*) style multiline comments.  These begin with a slash
  * star and end with a star slash.  Everything in between is ignored.</li>
  * </ol>
- * </p>
- * 
+ *
  * <p>A example SDL file:</p>
  * 
- * <pre>
+ * <code>
  *     # a tag having only a name
  *     my_tag
  * 
@@ -311,16 +309,16 @@ import java.util.Map.Entry;
  *    #
  *    #     List rows = tag.getChild("matrix").getChildrenValues("content");
  *        
- * </pre>
+ * </code>
  * 
  * <p>Example of getting the "location" attribute from the "daughter" tag
  * above (ignoring exceptions)</p>
  *  
- *  <pre>
+ *  <code>
  *      Tag root = new Tag("root").read("myfile.sdl");
  *      Tag daughter = root.getChild("daughter", true); // recursive search
  *      String location = daughter.getAttribute("location").toString();
- *  </pre>
+ *  </code>
  * 
  * <p>SDL is normally stored in a file with the .sdl extension.  These files 
  * should always be encoded using UTF8.  SDL fully supports unicode in 
@@ -477,6 +475,7 @@ public class Tag implements Serializable {
 	 * search.
 	 * 
 	 * @param childName The name of the child Tag
+	 * @param recursive search recursively
 	 * @return The first child tag having the given name or null if no such 
 	 *         child exists
 	 */
@@ -677,7 +676,8 @@ public class Tag implements Serializable {
 	
 	/**
 	 * Get the attribute value associated with the given key.
-	 * 
+	 *
+	 * @param key key to look up
 	 * @return The value for the key if such a key exists
 	 */
 	public Object getAttribute(String key) {
@@ -736,7 +736,8 @@ public class Tag implements Serializable {
 	/**
 	 * Returns an immutable view of all the attributes in the given
 	 * namespace.
-	 * 
+	 *
+	 * @param namespace namespace to select
 	 * @return An immutable view of all the attributes in the given
 	 *         namespace.
 	 */
@@ -839,7 +840,7 @@ public class Tag implements Serializable {
 	 * 
 	 * @param url A UTF8 encoded .sdl file
 	 * @throws IOException If there is an IO problem reading the source 
-	 * @throws ParseException If the SDL input is malformed
+	 * @throws SDLParseException If the SDL input is malformed
 	 * @return This tag after adding all the children read from the reader
 	 */
 	public Tag read(URL url) throws IOException, SDLParseException {
@@ -851,7 +852,7 @@ public class Tag implements Serializable {
 	 * 
 	 * @param file A UTF8 encoded .sdl file
 	 * @throws IOException If there is an IO problem reading the source 
-	 * @throws ParseException If the SDL input is malformed
+	 * @throws SDLParseException If the SDL input is malformed
 	 * @return This tag after adding all the children read from the reader
 	 */
 	public Tag read(File file) throws IOException, SDLParseException {
@@ -862,7 +863,7 @@ public class Tag implements Serializable {
 	 * Add all the tags specified in the given String to this Tag.
 	 * 
 	 * @param text An SDL string
-	 * @throws ParseException If the SDL input is malformed
+	 * @throws SDLParseException If the SDL input is malformed
 	 * @return This tag after adding all the children read from the reader
 	 */
 	public Tag read(String text) throws SDLParseException {
@@ -879,7 +880,7 @@ public class Tag implements Serializable {
 	 * 
 	 * @param reader A reader containing SDL source
 	 * @throws IOException If there is an IO problem reading the source 
-	 * @throws ParseException If the SDL input is malformed
+	 * @throws SDLParseException If the SDL input is malformed
 	 * @return This tag after adding all the children read from the reader
 	 */
 	public Tag read(Reader reader) throws IOException, SDLParseException {

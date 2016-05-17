@@ -1,7 +1,7 @@
 # SDLang Library for Java
 
 This library only has JUnit 4 as an external dependency.
-SDL for Java requires JRE 1.7 or higher.
+sdlang-java requires JRE 1.7 or higher.
 
 See the tests in src/org/ikayzo/sdl/test and Tag Javadoc:
 doc/org/ikayzo/sdl/Tag.html
@@ -16,3 +16,9 @@ Changes since beta 4:
 - Fixed numerous documentation errors
 - Various updates to documentation
 
+## Gradle
+
+* Build the project: `gradle build`
+* Run all tests: `gradle test`
+* Create the JAR `build/libs/sdlang-java-1.x.y.jar`: `gradle jar`
+* Generate Javadoc in `build/docs`: `gradle javadoc`

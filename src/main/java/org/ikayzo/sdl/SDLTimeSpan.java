@@ -39,11 +39,11 @@ public class SDLTimeSpan implements Serializable {
 	 * Create an sdl time span.  Note: if the timespan is negative all
 	 * components should be negative.
 	 * 
-	 * @param days
-	 * @param hours
-	 * @param minutes
-	 * @param seconds
-	 * @param milliseconds
+	 * @param days days
+	 * @param hours hours
+	 * @param minutes minutes
+	 * @param seconds seconds
+	 * @param milliseconds milliseconds
 	 */
 	public SDLTimeSpan(int days, int hours, int minutes, int seconds,
 			int milliseconds) {
@@ -60,7 +60,7 @@ public class SDLTimeSpan implements Serializable {
 	 * Create an sdl time span using the total number of milliseconds in the
 	 * span.
 	 * 
-	 * @param totalMilliseconds
+	 * @param totalMilliseconds total number of milliseconds
 	 */
 	public SDLTimeSpan(long totalMilliseconds) {
 		milliseconds=totalMilliseconds;
@@ -249,11 +249,11 @@ public class SDLTimeSpan implements Serializable {
 	}
 	
 	/**
-	 * <p>Returns an SDL representation of this time span using the format:<p>
+	 * <p>Returns an SDL representation of this time span using the format:</p>
 	 * 
-	 * <pre>
+	 * <code>
 	 * (days:)hours:minutes:seconds(.milliseconds)
-	 * </pre>
+	 * </code>
 	 * 
 	 * <p>(parenthesis indicate optional components)
 	 * 
@@ -263,11 +263,11 @@ public class SDLTimeSpan implements Serializable {
 	 * <p>Hours, minutes, and seconds will be zero paded to two characters.</p>
 	 * 
 	 * <p>Examples:</p>
-	 * <pre>
+	 * <code>
 	 *     23:13:00 (12 hours and 13 seconds)
 	 *     24d:12:13:09.234 (24 days, 12 hours, 13 minutes, 9 seconds,
 	 *         234 milliseconds)
-	 * </pre>
+	 * </code>
 	 * 
 	 * @return an SDL representation of this time span
 	 */
